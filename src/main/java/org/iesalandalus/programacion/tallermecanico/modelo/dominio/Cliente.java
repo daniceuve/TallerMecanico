@@ -21,7 +21,10 @@ public class Cliente {
     }
 
     public Cliente(Cliente cliente) {
-        this(cliente.nombre, cliente.dni, cliente.telefono);
+        Objects.requireNonNull(cliente, "No es posible copiar un cliente nulo.");
+        this.nombre = cliente.nombre;
+        this.dni = cliente.dni;
+        this.telefono = cliente.telefono;
     }
 
     public String getNombre() {
@@ -64,7 +67,7 @@ public class Cliente {
         Matcher matcher = patron.matcher(dni);
         if (!matcher.matches())
             throw new IllegalArgumentException("El DNI no tiene un formato válido.");
-        return new Cliente("", dni, "2");
+        return new Cliente("Dani", dni, "123456789");
     }
 
     public String getTelefono() {
