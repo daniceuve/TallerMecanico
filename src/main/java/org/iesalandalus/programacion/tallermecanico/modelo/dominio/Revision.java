@@ -10,6 +10,7 @@ public class Revision {
 
     private static final float PRECIO_HORA = 30;
     private static final float PRECIO_DIA = 10;
+    private static final double PRECIO_MATERIAL = 1.5;
     public static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private Cliente cliente;
     private Vehiculo vehiculo;
@@ -40,7 +41,7 @@ public class Revision {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    private void setCliente(Cliente cliente) {
         Objects.requireNonNull(cliente, "El cliente no puede ser nulo.");
         this.cliente = cliente;
     }
@@ -49,7 +50,7 @@ public class Revision {
         return vehiculo;
     }
 
-    public void setVehiculo(Vehiculo vehiculo) {
+    private void setVehiculo(Vehiculo vehiculo) {
         Objects.requireNonNull(vehiculo, "El vehículo no puede ser nulo.");
         this.vehiculo = vehiculo;
     }
@@ -58,7 +59,7 @@ public class Revision {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    private void setFechaInicio(LocalDate fechaInicio) {
         if (fechaInicio == null)
             throw new NullPointerException("La fecha de inicio no puede ser nula.");
         if (fechaInicio.isAfter(LocalDate.now()))
@@ -70,7 +71,7 @@ public class Revision {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
+    private void setFechaFin(LocalDate fechaFin) {
         if (fechaFin == null)
             throw new NullPointerException("La fecha de fin no puede ser nula.");
         if (fechaFin.isBefore(fechaInicio))
@@ -85,7 +86,7 @@ public class Revision {
     }
 
     public void anadirHoras(int horas) throws OperationNotSupportedException {
-        if (horas < 0)
+        if (horas <= 0)
             throw new IllegalArgumentException("Las horas a añadir deben ser mayores que cero.");
         if (estaCerrada())
             throw new OperationNotSupportedException("No se puede añadir horas, ya que la revisión está cerrada.");
@@ -97,7 +98,7 @@ public class Revision {
     }
 
     public void anadirPrecioMaterial(float precioMaterial) throws OperationNotSupportedException {
-        if (precioMaterial < 0)
+        if (precioMaterial <= 0)
             throw new IllegalArgumentException("El precio del material a añadir debe ser mayor que cero.");
         if (estaCerrada())
             throw new OperationNotSupportedException("No se puede añadir precio del material, ya que la revisión está cerrada.");
@@ -116,17 +117,14 @@ public class Revision {
     }
 
     public float getPrecio() {
-        long dias = fechaFin != null ? ChronoUnit.DAYS.between(fechaInicio, fechaFin) + 1 : 0;
         float precioTotalHoras = horas * PRECIO_HORA;
-        float precioTotalDias = dias > 1 ? (dias - 1) * PRECIO_DIA : 0;
-        if (dias == 1) {
-            precioTotalDias = PRECIO_DIA;
-        }
-        return precioTotalHoras + precioTotalDias + precioMaterial;
+        float precioTotalDias = getDias() >= 1 ? (getDias()) * PRECIO_DIA : 0;
+        return (float) (precioTotalHoras + precioTotalDias + precioMaterial * PRECIO_MATERIAL);
     }
 
-
-
+    private float getDias() {
+        return fechaFin != null ? ChronoUnit.DAYS.between(fechaInicio, fechaFin): 0;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -150,8 +148,9 @@ public class Revision {
         String fechaFinString = fechaFin != null ? fechaFin.format(Revision.FORMATO_FECHA) : "";
         String horasString = String.valueOf(horas);
         String precioMaterialString = String.format("%.2f", precioMaterial);
-        String precioString = String.format("%.2f", getPrecio());
+        String precioString = getPrecio() != 0.0 ? String.format(", %.2f € total", getPrecio()) : "";
         return cliente + " - " + vehiculo + ": (" + fechaInicioString + " - " + fechaFinString + "), " +
-                horasString + " horas, " + precioMaterialString + " € en material, " + precioString + " € total";
+                horasString + " horas, " + precioMaterialString + " € en material" + precioString;
     }
 }
+
