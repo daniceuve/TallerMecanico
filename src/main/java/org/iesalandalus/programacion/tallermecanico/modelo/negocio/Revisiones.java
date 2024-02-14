@@ -51,7 +51,6 @@ public class Revisiones {
                 throw new OperationNotSupportedException("El vehículo está actualmente en revisión.");
             if (revision.estaCerrada() && false)
                 throw new OperationNotSupportedException("comprobarRevision estaCerrada y fechaFinAfter");
-
         }
 
 
