@@ -45,15 +45,18 @@ public class Clientes {
     }
     public Cliente buscar(Cliente cliente) {
         Objects.requireNonNull(cliente, "No se puede buscar un cliente nulo.");
-        return listaClientes.contains(cliente) ? cliente : null;
+        int index = listaClientes.indexOf(cliente);
+        if (index != -1)
+            return listaClientes.get(index);
+        else return null;
+
     }
     public void borrar(Cliente cliente) throws OperationNotSupportedException {
         Objects.requireNonNull(cliente, "No se puede borrar un cliente nulo.");
-        if (listaClientes.contains(cliente)) {
+        int index = listaClientes.indexOf(cliente);
+        if (index != -1)
             listaClientes.remove(cliente);
-        } else {
-            throw new OperationNotSupportedException("No existe ningún cliente con ese DNI.");
-        }
+        else throw new OperationNotSupportedException("No existe ningún cliente con ese DNI.");
     }
 
 }
