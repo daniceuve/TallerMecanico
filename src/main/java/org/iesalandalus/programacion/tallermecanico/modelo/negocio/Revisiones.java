@@ -82,9 +82,7 @@ public class Revisiones {
     public Revision buscar(Revision revision) {
         Objects.requireNonNull(revision, "No se puede buscar una revisión nula.");
         int index = listaRevisiones.indexOf(revision);
-        if (index != -1)
-            return listaRevisiones.get(index);
-        else return null;
+        return index != -1 ? listaRevisiones.get(index) : null;
     }
 
     public void borrar(Revision revision) throws OperationNotSupportedException {
