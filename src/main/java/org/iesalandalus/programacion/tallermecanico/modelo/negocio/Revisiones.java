@@ -30,7 +30,7 @@ public class Revisiones {
         return listaRevisionesCliente;
     }
     public List<Revision> get(Vehiculo vehiculo) {
-        Objects.requireNonNull(vehiculo, "El vehiculo no puede ser nulo.");
+        Objects.requireNonNull(vehiculo, "El vehículo no puede ser nulo.");
         List<Revision> listaRevisionesVehiculo = new ArrayList<>();
         for (Revision revision : listaRevisiones) {
             if (revision.getVehiculo().equals(vehiculo))
@@ -40,20 +40,20 @@ public class Revisiones {
     }
     public void insertar(Revision revision) throws OperationNotSupportedException {
         Objects.requireNonNull(revision,"No se puede insertar una revisión nula.");
-        comprobarRevision(revision.getCliente(), revision.getVehiculo(), revision.getFechaFin());
+        comprobarRevision(revision.getCliente(), revision.getVehiculo(), revision.getFechaInicio());
         listaRevisiones.add(revision);
     }
     private void comprobarRevision(Cliente cliente, Vehiculo vehiculo, LocalDate fechaRevision) throws OperationNotSupportedException{
         for (Revision revision : listaRevisiones) {
             if (!revision.estaCerrada() && revision.getCliente().equals(cliente))
                 throw new OperationNotSupportedException("El cliente tiene otra revisión en curso.");
-            if (!revision.estaCerrada() && revision.getVehiculo().equals(vehiculo))
+            else if (!revision.estaCerrada() && revision.getVehiculo().equals(vehiculo))
                 throw new OperationNotSupportedException("El vehículo está actualmente en revisión.");
-            if (revision.estaCerrada() && false)
-                throw new OperationNotSupportedException("comprobarRevision estaCerrada y fechaFinAfter");
+            else if (revision.estaCerrada() && revision.getCliente().equals(cliente) && !fechaRevision.isAfter(revision.getFechaFin()))
+                throw new OperationNotSupportedException("El cliente tiene una revisión posterior.");
+            else if (revision.estaCerrada() && revision.getVehiculo().equals(vehiculo) && !fechaRevision.isAfter(revision.getFechaFin()))
+                throw new OperationNotSupportedException("El vehículo tiene una revisión posterior.");
         }
-
-
     }
 
     private Revision getRevision(Revision revision) throws OperationNotSupportedException {
@@ -76,6 +76,7 @@ public class Revisiones {
 
     public void cerrar(Revision revision, LocalDate fechaFin) throws OperationNotSupportedException {
         Objects.requireNonNull(revision, "No puedo operar sobre una revisión nula.");
+        Objects.requireNonNull(fechaFin, "cerrar");
         getRevision(revision).cerrar(fechaFin);
     }
 
@@ -94,10 +95,12 @@ public class Revisiones {
     }
 
 }
+
+
 /*
 static {
     for (Opcion opcion : values()) {
-        opciones.put(opcion.numeroOpcion, opcion)
+        opciones.put(opcion.numeroOpcion, opcion);
     }
 }
  */

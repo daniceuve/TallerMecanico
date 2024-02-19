@@ -10,7 +10,7 @@ public class Revision {
 
     private static final float PRECIO_HORA = 30;
     private static final float PRECIO_DIA = 10;
-    private static final double PRECIO_MATERIAL = 1.5;
+    private static final float PRECIO_MATERIAL = 1.5F;
     public static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private Cliente cliente;
     private Vehiculo vehiculo;
@@ -23,8 +23,6 @@ public class Revision {
         setCliente(cliente);
         setVehiculo(vehiculo);
         setFechaInicio(fechaInicio);
-        horas = 0;
-        precioMaterial = 0;
     }
 
     public Revision(Revision revision) {
@@ -60,8 +58,7 @@ public class Revision {
     }
 
     private void setFechaInicio(LocalDate fechaInicio) {
-        if (fechaInicio == null)
-            throw new NullPointerException("La fecha de inicio no puede ser nula.");
+        Objects.requireNonNull(fechaInicio, "La fecha de inicio no puede ser nula.");
         if (fechaInicio.isAfter(LocalDate.now()))
             throw new IllegalArgumentException("La fecha de inicio no puede ser futura.");
         this.fechaInicio = fechaInicio;
@@ -72,8 +69,7 @@ public class Revision {
     }
 
     private void setFechaFin(LocalDate fechaFin) {
-        if (fechaFin == null)
-            throw new NullPointerException("La fecha de fin no puede ser nula.");
+        Objects.requireNonNull(fechaFin, "La fecha de fin no puede ser nula.");
         if (fechaFin.isBefore(fechaInicio))
             throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio.");
         if (fechaFin.isAfter(LocalDate.now()))
@@ -110,20 +106,19 @@ public class Revision {
     }
 
     public void cerrar(LocalDate fechaFin) throws OperationNotSupportedException {
-        if (this.fechaFin != null) {
+        if (this.fechaFin != null)
             throw new OperationNotSupportedException("La revisión ya está cerrada.");
-        }
         setFechaFin(fechaFin);
     }
 
     public float getPrecio() {
         float precioTotalHoras = horas * PRECIO_HORA;
-        float precioTotalDias = getDias() >= 1 ? (getDias()) * PRECIO_DIA : 0;
-        return (float) (precioTotalHoras + precioTotalDias + precioMaterial * PRECIO_MATERIAL);
+        float precioTotalDias = getDias() * PRECIO_DIA;
+        return (precioTotalHoras + precioTotalDias + precioMaterial * PRECIO_MATERIAL);
     }
 
     private float getDias() {
-        return fechaFin != null ? ChronoUnit.DAYS.between(fechaInicio, fechaFin): 0;
+        return fechaFin != null ? ChronoUnit.DAYS.between(fechaInicio,fechaFin) : 0;
     }
 
     @Override
