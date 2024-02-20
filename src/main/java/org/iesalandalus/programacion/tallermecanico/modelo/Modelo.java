@@ -117,19 +117,16 @@ public class Modelo {
     }
 
     public List<Revision> getRevisiones(Cliente cliente) {
-
         List<Revision> listaRevisionesCliente = new ArrayList<>();
         for (Revision recorrer : revisiones.get(cliente))
-            if (recorrer.getCliente().equals(cliente))
-                listaRevisionesCliente.add(recorrer);
+            listaRevisionesCliente.add(new Revision(recorrer));
         return listaRevisionesCliente;
     }
 
     public List<Revision> getRevisiones(Vehiculo vehiculo) {
         List<Revision> listaRevisionesVehiculo = new ArrayList<>();
         for (Revision recorrer : revisiones.get(vehiculo))
-            if (recorrer.getVehiculo().equals(vehiculo))
-                listaRevisionesVehiculo.add(recorrer);
+            listaRevisionesVehiculo.add(new Revision(recorrer));
         return listaRevisionesVehiculo;
     }
 
