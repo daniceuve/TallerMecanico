@@ -95,12 +95,3 @@ public class Revisiones {
     }
 
 }
-
-
-/*
-static {
-    for (Opcion opcion : values()) {
-        opciones.put(opcion.numeroOpcion, opcion);
-    }
-}
- */
