@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 public record Vehiculo(String marca, String modelo, String matricula) {
 
-    private static final String ER_MARCA = "[A-Z][a-z]+(?:[- ]?[A-Z][a-z]+)?|[A-Z]+";
-    private static final String ER_MATRICULA = "\\\\d{4}[^\\\\W_AEIOUa-z]{3}";
+    private static final String ER_MARCA = "([A-ZÁÉÍÓÚ]([a-zéáíóú]||[A-ZÁÉÍÓÚ])+)(((-||\\s)[A-ZÁÉÍÓÚ][a-zéáíóú]+)?)+";
+    private static final String ER_MATRICULA = "^\\d{4}[BCDFGHJKLMNPRSTVWXYZ]{3}$";
 
     public Vehiculo {
         validarMarca(marca);

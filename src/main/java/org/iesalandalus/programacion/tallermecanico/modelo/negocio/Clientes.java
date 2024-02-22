@@ -26,18 +26,20 @@ public class Clientes {
     public boolean modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
         Objects.requireNonNull(cliente, "No se puede modificar un cliente nulo.");
         boolean modificado = false;
-
+        Cliente clienteEncontrado = buscar(cliente);
+        if (clienteEncontrado == null)
+            throw new OperationNotSupportedException("No existe ningún cliente con ese DNI.");
         int index = listaClientes.indexOf(cliente);
         if (index != -1) {
             if (nombre != null) {
-                cliente.setNombre(nombre);
+                clienteEncontrado.setNombre(nombre);
                 modificado = true;
             }
             if (telefono != null) {
-                cliente.setTelefono(telefono);
+                clienteEncontrado.setTelefono(telefono);
                 modificado = true;
             }
-            listaClientes.set(index, cliente);
+            listaClientes.set(index, clienteEncontrado);
         }
         else throw new OperationNotSupportedException("No existe ningún cliente con ese DNI.");
 
