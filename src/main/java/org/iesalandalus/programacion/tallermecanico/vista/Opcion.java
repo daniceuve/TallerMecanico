@@ -13,17 +13,18 @@ public enum Opcion {
     MODIFICAR_CLIENTE(5, "Modificar cliente"),
     INSERTAR_VEHICULO(6, "Insertar vehículo"),
     BUSCAR_VEHICULO(7, "Buscar vehículo"),
-    LISTAR_VEHICULOS(8, "Listar vehículos"),
-    INSERTAR_REVISION(9, "Insertar revisión"),
-    BUSCAR_REVISION(10, "Buscar revisión"),
-    BORRAR_REVISION(11, "Borrar revisión"),
-    LISTAR_REVISIONES(12, "Listar revisión"),
-    LISTAR_REVISIONES_CLIENTE(13, "Listar revisión de cliente"),
-    LISTAR_REVISION_VEHICULO(14, "Buscar revisión de vehículo"),
-    ANADIR_HORAS_REVISION(15, "Añadir horas de revisión"),
-    ANADIR_PRECIO_MATERIAL_REVISION(16, "Añadir precio material de revisión"),
-    CERRAR_REVISION(17, "Cerrar revisión"),
-    SALIR(18, "Salir");
+    BORRAR_VEHICULO(8, "Borrar vehículo"),
+    LISTAR_VEHICULOS(9, "Listar vehículos"),
+    INSERTAR_REVISION(10, "Insertar revisión"),
+    BUSCAR_REVISION(11, "Buscar revisión"),
+    BORRAR_REVISION(12, "Borrar revisión"),
+    LISTAR_REVISIONES(13, "Listar revisión"),
+    LISTAR_REVISIONES_CLIENTE(14, "Listar revisión de cliente"),
+    LISTAR_REVISION_VEHICULO(15, "Buscar revisión de vehículo"),
+    ANADIR_HORAS_REVISION(16, "Añadir horas de revisión"),
+    ANADIR_PRECIO_MATERIAL_REVISION(17, "Añadir precio material de revisión"),
+    CERRAR_REVISION(18, "Cerrar revisión"),
+    SALIR(19, "Salir");
 
     private final int numeroOpcion;
     private final String mensaje;
@@ -43,9 +44,9 @@ public enum Opcion {
         return opciones.containsKey(numeroOpcion);
     }
 
-    public static Opcion get(int numeroOpcion) throws OperationNotSupportedException {
+    public static Opcion get(int numeroOpcion) {
         if (!esValida(numeroOpcion))
-            throw new OperationNotSupportedException("Opción no válida.");
+            throw new IllegalArgumentException("Opción no válida.");
         else return opciones.get(numeroOpcion);
     }
 
