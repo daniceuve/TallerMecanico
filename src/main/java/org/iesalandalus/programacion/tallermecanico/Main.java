@@ -1,7 +1,7 @@
 package org.iesalandalus.programacion.tallermecanico;
 
 import org.iesalandalus.programacion.tallermecanico.controlador.Controlador;
-import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
+import org.iesalandalus.programacion.tallermecanico.modelo.cascada.Modelo;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 
 public class Main {

@@ -1,6 +1,5 @@
-package org.iesalandalus.programacion.tallermecanico.vista;
+package org.iesalandalus.programacion.tallermecanico.vista.eventos;
 
-import javax.naming.OperationNotSupportedException;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -3,6 +3,8 @@ import org.iesalandalus.programacion.tallermecanico.controlador.Controlador;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
+import org.iesalandalus.programacion.tallermecanico.vista.eventos.Opcion;
+import org.iesalandalus.programacion.tallermecanico.vista.texto.Consola;
 
 import javax.naming.OperationNotSupportedException;
 import java.util.List;
