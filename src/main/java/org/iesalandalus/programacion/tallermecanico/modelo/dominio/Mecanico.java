@@ -22,6 +22,11 @@ public class Mecanico extends Trabajo {
         return precioMaterial;
     }
 
+    @Override
+    public float getPrecioEspecifico() {
+        return getHoras() * 30 + PRECIO_MATERIAL;
+    }
+
     public void anadirPrecioMaterial(float precioMaterial) throws OperationNotSupportedException {
         if (precioMaterial <= 0)
             throw new IllegalArgumentException("El precio del material a añadir debe ser mayor que cero.");

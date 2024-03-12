@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Revision extends Trabajo {
 
-    private static final float PRECIO_HORA = 30;
+    private static final float FACTOR_HORA = 30;
 
     public Revision(Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio) {
         super(cliente,vehiculo, fechaInicio);
@@ -17,11 +17,11 @@ public class Revision extends Trabajo {
     public Revision(Revision revision) {
         super(revision);
         Objects.requireNonNull(revision, "La revisión no puede ser nula.");
-        this.cliente = new Cliente(revision.cliente);
-        this.vehiculo = revision.vehiculo;
-        this.fechaInicio = revision.fechaInicio;
-        this.fechaFin = revision.fechaFin;
-        this.horas = revision.horas;
+    }
+
+    @Override
+    public float getPrecioEspecifico() {
+        return 0;
     }
 
 
@@ -30,7 +30,7 @@ public class Revision extends Trabajo {
         String fechaInicioString = fechaInicio != null ? fechaInicio.format(Revision.FORMATO_FECHA) : "";
         String fechaFinString = fechaFin != null ? fechaFin.format(Revision.FORMATO_FECHA) : "";
         String horasString = String.valueOf(horas);
-        String precioMaterialString = String.format("%.2f", super(getPrecio()));
+        String precioMaterialString = String.format("%.2f", getPrecio());
         String precioString = getPrecio() != 0.0 ? String.format(", %.2f € total", getPrecio()) : "";
         return cliente + " - " + vehiculo + ": (" + fechaInicioString + " - " + fechaFinString + "), " +
                 horasString + " horas, " + precioMaterialString + " € en material" + precioString;

@@ -8,12 +8,12 @@ import java.util.Objects;
 
 public abstract class Trabajo {
     public static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private static final float PRECIO_DIA = 10;
-    protected Cliente cliente;
-    protected Vehiculo vehiculo;
-    protected LocalDate fechaInicio;
-    protected LocalDate fechaFin;
-    protected int horas;
+    private static final float FACTOR_DIA = 10;
+    private Cliente cliente;
+    private Vehiculo vehiculo;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+    private int horas;
 
     protected Trabajo(Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio) {
         setCliente(cliente);
@@ -45,7 +45,7 @@ public abstract class Trabajo {
         return cliente;
     }
 
-    protected void setCliente(Cliente cliente) {
+    private void setCliente(Cliente cliente) {
         Objects.requireNonNull(cliente, "El cliente no puede ser nulo.");
         this.cliente = cliente;
     }
@@ -54,7 +54,7 @@ public abstract class Trabajo {
         return vehiculo;
     }
 
-    protected void setVehiculo(Vehiculo vehiculo) {
+    private void setVehiculo(Vehiculo vehiculo) {
         Objects.requireNonNull(vehiculo, "El vehículo no puede ser nulo.");
         this.vehiculo = vehiculo;
     }
@@ -63,7 +63,7 @@ public abstract class Trabajo {
         return fechaInicio;
     }
 
-    protected void setFechaInicio(LocalDate fechaInicio) {
+    private void setFechaInicio(LocalDate fechaInicio) {
         Objects.requireNonNull(fechaInicio, "La fecha de inicio no puede ser nula.");
         if (fechaInicio.isAfter(LocalDate.now()))
             throw new IllegalArgumentException("La fecha de inicio no puede ser futura.");
@@ -106,9 +106,7 @@ public abstract class Trabajo {
     }
 
     public float getPrecio() {
-        float precioTotalHoras = horas * Revision.PRECIO_HORA;
-        float precioTotalDias = getDias() * PRECIO_DIA;
-        return (precioTotalHoras + precioTotalDias + precioMaterial * Revision.PRECIO_MATERIAL);
+        return getDias() * getPrecioFijo();
     }
 
     private float getPrecioFijo() {
@@ -118,6 +116,8 @@ public abstract class Trabajo {
     private float getDias() {
         return fechaFin != null ? ChronoUnit.DAYS.between(fechaInicio, fechaFin) : 0;
     }
+
+    public abstract float getPrecioEspecifico();
 
     @Override
     public boolean equals(Object o) {
