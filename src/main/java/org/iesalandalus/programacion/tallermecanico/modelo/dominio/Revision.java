@@ -16,24 +16,22 @@ public class Revision extends Trabajo {
 
     public Revision(Revision revision) {
         super(revision);
-        Objects.requireNonNull(revision, "La revisión no puede ser nula.");
     }
 
     @Override
     public float getPrecioEspecifico() {
-        return 0;
-    }
 
+        return getHoras() *  35;
+    }
 
     @Override
     public String toString() {
-        String fechaInicioString = fechaInicio != null ? fechaInicio.format(Revision.FORMATO_FECHA) : "";
-        String fechaFinString = fechaFin != null ? fechaFin.format(Revision.FORMATO_FECHA) : "";
-        String horasString = String.valueOf(horas);
-        String precioMaterialString = String.format("%.2f", getPrecio());
-        String precioString = getPrecio() != 0.0 ? String.format(", %.2f € total", getPrecio()) : "";
-        return cliente + " - " + vehiculo + ": (" + fechaInicioString + " - " + fechaFinString + "), " +
-                horasString + " horas, " + precioMaterialString + " € en material" + precioString;
+        String fechaInicioString = getFechaInicio() != null ? getFechaInicio().format(Revision.FORMATO_FECHA) : "";
+        String fechaFinString = getFechaFin() != null ? getFechaFin().format(Revision.FORMATO_FECHA) : "";
+        String horasString = String.valueOf(getHoras());
+        String precioString = getPrecio() != 0 ? String.format(", %.2f € total", getPrecio()) : "";
+        return "Revisión -> " + getCliente() + " - " + getVehiculo() + " (" + fechaInicioString + " - " + fechaFinString + "): " +
+                horasString + " horas" + precioString;
     }
 }
 

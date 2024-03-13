@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public abstract class Trabajo {
     public static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private static final float FACTOR_DIA = 10;
+    private static final float FACTOR_DIA = 10F;
     private Cliente cliente;
     private Vehiculo vehiculo;
     private LocalDate fechaInicio;
@@ -21,7 +21,7 @@ public abstract class Trabajo {
         setFechaInicio(fechaInicio);
     }
     protected Trabajo(Trabajo trabajo) {
-        Objects.requireNonNull(trabajo, "La revisión no puede ser nula.");
+        Objects.requireNonNull(trabajo, "El trabajo no puede ser nulo.");
         this.cliente = new Cliente(trabajo.cliente);
         this.vehiculo = trabajo.vehiculo;
         this.fechaInicio = trabajo.fechaInicio;
@@ -34,7 +34,7 @@ public abstract class Trabajo {
             return new Revision((Revision) trabajo);
         else if (trabajo instanceof Mecanico)
             return new Mecanico((Mecanico) trabajo);
-        else throw new IllegalArgumentException("Error Copiar trabajo.");
+        else throw new NullPointerException("El trabajo no puede ser nulo.");
     }
 
     public static Trabajo get(Vehiculo vehiculo) {
@@ -90,23 +90,23 @@ public abstract class Trabajo {
     public void anadirHoras(int horas) throws OperationNotSupportedException {
         if (horas <= 0)
             throw new IllegalArgumentException("Las horas a añadir deben ser mayores que cero.");
-        if (estaCerrada())
-            throw new OperationNotSupportedException("No se puede añadir horas, ya que la revisión está cerrada.");
+        if (estaCerrado())
+            throw new OperationNotSupportedException("No se puede añadir horas, ya que el trabajo está cerrado.");
         this.horas += horas;
     }
 
-    public boolean estaCerrada() {
+    public boolean estaCerrado() {
         return fechaFin != null;
     }
 
     public void cerrar(LocalDate fechaFin) throws OperationNotSupportedException {
         if (this.fechaFin != null)
-            throw new OperationNotSupportedException("La revisión ya está cerrada.");
+            throw new OperationNotSupportedException("El trabajo ya está cerrado.");
         setFechaFin(fechaFin);
     }
 
     public float getPrecio() {
-        return getDias() * getPrecioFijo();
+       return getPrecioFijo() + getPrecioEspecifico();
     }
 
     private float getPrecioFijo() {
@@ -123,11 +123,11 @@ public abstract class Trabajo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Trabajo trabajo)) return false;
-        return horas == trabajo.horas && Objects.equals(cliente, trabajo.cliente) && Objects.equals(vehiculo, trabajo.vehiculo) && Objects.equals(fechaInicio, trabajo.fechaInicio) && Objects.equals(fechaFin, trabajo.fechaFin);
+        return Objects.equals(cliente, trabajo.cliente) && Objects.equals(vehiculo, trabajo.vehiculo) && Objects.equals(fechaInicio, trabajo.fechaInicio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cliente, vehiculo, fechaInicio, fechaFin, horas);
+        return Objects.hash(cliente, vehiculo, fechaInicio);
     }
 }
