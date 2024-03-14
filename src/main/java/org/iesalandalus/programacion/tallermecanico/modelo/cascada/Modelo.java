@@ -3,9 +3,10 @@ package org.iesalandalus.programacion.tallermecanico.modelo.cascada;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Clientes;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Revisiones;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Vehiculos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.*;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
@@ -15,9 +16,9 @@ import java.util.Objects;
 
 public class Modelo {
 
-    Clientes clientes;
-    Vehiculos vehiculos;
-    Revisiones revisiones;
+    IClientes clientes;
+    IVehiculos vehiculos;
+    ITrabajos revisiones;
 
     public Modelo() {
 
@@ -26,7 +27,7 @@ public class Modelo {
     public void comenzar() {
         clientes = new Clientes();
         vehiculos = new Vehiculos();
-        revisiones = new Revisiones();
+        revisiones = new Trabajos();
     }
 
     public void terminar() {

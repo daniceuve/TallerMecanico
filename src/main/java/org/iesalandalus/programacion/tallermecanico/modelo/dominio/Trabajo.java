@@ -30,11 +30,11 @@ public abstract class Trabajo {
     }
 
     public static Trabajo copiar(Trabajo trabajo) {
+        Objects.requireNonNull(trabajo, "El trabajo no puede ser nulo.");
         if (trabajo instanceof Revision)
             return new Revision((Revision) trabajo);
-        else if (trabajo instanceof Mecanico)
+        else
             return new Mecanico((Mecanico) trabajo);
-        else throw new NullPointerException("El trabajo no puede ser nulo.");
     }
 
     public static Trabajo get(Vehiculo vehiculo) {
@@ -110,7 +110,7 @@ public abstract class Trabajo {
     }
 
     private float getPrecioFijo() {
-        return getDias() * 10;
+        return getDias() * FACTOR_DIA;
     }
 
     private float getDias() {

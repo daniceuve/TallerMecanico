@@ -1,21 +1,24 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
 
 import javax.naming.OperationNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Clientes {
+public class Clientes implements IClientes {
 
     private final List<Cliente> listaClientes;
     public Clientes() {
         listaClientes = new ArrayList<>();
     }
+    @Override
     public List<Cliente> get() {
         return new ArrayList<>(listaClientes);
     }
+    @Override
     public void insertar(Cliente cliente) throws OperationNotSupportedException {
         Objects.requireNonNull(cliente,"No se puede insertar un cliente nulo.");
         if (listaClientes.contains(cliente)) {
@@ -23,6 +26,7 @@ public class Clientes {
         }
         listaClientes.add(cliente);
     }
+    @Override
     public boolean modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
         Objects.requireNonNull(cliente, "No se puede modificar un cliente nulo.");
         boolean modificado = false;
@@ -45,6 +49,7 @@ public class Clientes {
 
         return modificado;
     }
+    @Override
     public Cliente buscar(Cliente cliente) {
         Objects.requireNonNull(cliente, "No se puede buscar un cliente nulo.");
         int index = listaClientes.indexOf(cliente);
@@ -53,6 +58,7 @@ public class Clientes {
         else return null;
 
     }
+    @Override
     public void borrar(Cliente cliente) throws OperationNotSupportedException {
         Objects.requireNonNull(cliente, "No se puede borrar un cliente nulo.");
         int index = listaClientes.indexOf(cliente);

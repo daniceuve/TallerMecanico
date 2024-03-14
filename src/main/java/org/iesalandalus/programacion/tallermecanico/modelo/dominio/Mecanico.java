@@ -16,7 +16,7 @@ public class Mecanico extends Trabajo {
 
     public Mecanico(Mecanico mecanico) {
         super(mecanico);
-
+        this.precioMaterial = mecanico.precioMaterial;
     }
 
     public float getPrecioMaterial() {
@@ -25,7 +25,7 @@ public class Mecanico extends Trabajo {
 
     @Override
     public float getPrecioEspecifico() {
-        return (float) getHoras() * 30 + precioMaterial;
+        return getHoras() * FACTOR_HORA + precioMaterial * FACTOR_PRECIO_MATERIAL;
     }
 
     public void anadirPrecioMaterial(float precioMaterial) throws OperationNotSupportedException {
@@ -38,8 +38,8 @@ public class Mecanico extends Trabajo {
 
     @Override
     public String toString() {
-        String fechaInicioString = getFechaInicio() != null ? getFechaInicio().format(Mecanico.FORMATO_FECHA) : "";
-        String fechaFinString = getFechaFin() != null ? getFechaFin().format(Mecanico.FORMATO_FECHA) : "";
+        String fechaInicioString = getFechaInicio() != null ? getFechaInicio().format(FORMATO_FECHA) : "";
+        String fechaFinString = getFechaFin() != null ? getFechaFin().format(FORMATO_FECHA) : "";
         String horasString = String.valueOf(getHoras());
         String precioMaterialString = String.format("%.2f", precioMaterial);
         String precioString = getPrecio() != 0 ? String.format(", %.2f € total", getPrecio()) : "";

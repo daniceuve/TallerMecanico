@@ -6,7 +6,7 @@ import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 
 public class Main {
     public static void main(String[] args) {
-        Modelo modelo = new Modelo();
+        Modelo modelo = new Modelo();  // Modelo modelo = FabricaModelo.CASCADA.crear(FabricaFuenteDatos.memoria);
         Vista vista = new Vista();
         Controlador controlador = new Controlador(modelo, vista);
         controlador.comenzar();
