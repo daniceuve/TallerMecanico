@@ -20,7 +20,7 @@ public interface ITrabajos {
 
     void anadirHoras(Trabajo trabajo, int horas) throws OperationNotSupportedException;
 
-    void anadirPrecioMaterial(Mecanico mecanico, float precioMaterial) throws OperationNotSupportedException;
+    void anadirPrecioMaterial(Trabajo trabajo, float precioMaterial) throws OperationNotSupportedException;
 
     void cerrar(Trabajo trabajo, LocalDate fechaFin) throws OperationNotSupportedException;
 
