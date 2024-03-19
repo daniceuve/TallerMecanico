@@ -1,9 +1,6 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
 
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Mecanico;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Trabajo;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
+import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
 
 import javax.naming.OperationNotSupportedException;
@@ -56,19 +53,21 @@ public class Trabajos implements ITrabajos {
             else if (!trabajo.estaCerrado() && trabajo.getVehiculo().equals(vehiculo))
                 throw new OperationNotSupportedException("El vehículo está actualmente en el taller.");
             else if (trabajo.estaCerrado() && trabajo.getCliente().equals(cliente) && !fechaRevision.isAfter(trabajo.getFechaFin()))
-                throw new OperationNotSupportedException("El cliente tiene una revisión posterior.");
+                throw new OperationNotSupportedException("El cliente tiene otro trabajo posterior.");
             else if (trabajo.estaCerrado() && trabajo.getVehiculo().equals(vehiculo) && !fechaRevision.isAfter(trabajo.getFechaFin()))
-                throw new OperationNotSupportedException("El vehículo tiene una revisión posterior.");
+                throw new OperationNotSupportedException("El vehículo tiene otro trabajo posterior.");
         }
     }
 
     private Trabajo getTrabajoAbierto(Vehiculo vehiculo) throws OperationNotSupportedException {
         Objects.requireNonNull(vehiculo, "No puedo operar sobre un vehiculo nulo.");
-        List<Trabajo> vehiculoTest = get(vehiculo);
-        int index = vehiculoTest.indexOf(Trabajo.get(vehiculo));
-        if (index != -1)
-             return vehiculoTest.get(index);
-        else throw new OperationNotSupportedException("No existe ningún trabajo abierto para dicho vehículo.");
+        Trabajo trabajo = null;
+        for (Trabajo trabajo1 : listaTrabajos)
+            if (trabajo1.getVehiculo().equals(vehiculo) && (!trabajo1.estaCerrado()))
+                    trabajo = trabajo1;
+        if (trabajo == null)
+            throw new OperationNotSupportedException("No existe ningún trabajo abierto para dicho vehículo.");
+        else return trabajo;
     }
 
     @Override
@@ -80,8 +79,16 @@ public class Trabajos implements ITrabajos {
     @Override
     public void anadirPrecioMaterial(Trabajo trabajo, float precioMaterial) throws OperationNotSupportedException {
         Objects.requireNonNull(trabajo, "No puedo añadir precio del material a un trabajo nulo.");
-        Mecanico mecanico = (Mecanico) trabajo;
-        mecanico.anadirPrecioMaterial(precioMaterial);
+        Mecanico mecanico;
+        Revision revision;
+        if (trabajo instanceof Mecanico) {
+            mecanico = (Mecanico) getTrabajoAbierto(trabajo.getVehiculo());
+            mecanico.anadirPrecioMaterial(precioMaterial);
+        } else if (trabajo instanceof Revision) {
+            revision = (Revision) getTrabajoAbierto(trabajo.getVehiculo());
+            throw new OperationNotSupportedException("No se puede añadir precio al material para este tipo de trabajos.");
+        }
+
     }
 
     @Override
