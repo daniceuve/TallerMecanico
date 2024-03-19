@@ -52,9 +52,9 @@ public class Trabajos implements ITrabajos {
     private void comprobarTrabajo(Cliente cliente, Vehiculo vehiculo, LocalDate fechaRevision) throws OperationNotSupportedException{
         for (Trabajo trabajo : listaTrabajos) {
             if (!trabajo.estaCerrado() && trabajo.getCliente().equals(cliente))
-                throw new OperationNotSupportedException("El cliente tiene otra revisión en curso.");
+                throw new OperationNotSupportedException("El cliente tiene otro trabajo en curso.");
             else if (!trabajo.estaCerrado() && trabajo.getVehiculo().equals(vehiculo))
-                throw new OperationNotSupportedException("El vehículo está actualmente en revisión.");
+                throw new OperationNotSupportedException("El vehículo está actualmente en el taller.");
             else if (trabajo.estaCerrado() && trabajo.getCliente().equals(cliente) && !fechaRevision.isAfter(trabajo.getFechaFin()))
                 throw new OperationNotSupportedException("El cliente tiene una revisión posterior.");
             else if (trabajo.estaCerrado() && trabajo.getVehiculo().equals(vehiculo) && !fechaRevision.isAfter(trabajo.getFechaFin()))
@@ -62,31 +62,32 @@ public class Trabajos implements ITrabajos {
         }
     }
 
-    private Trabajo getRevision(Trabajo trabajo) throws OperationNotSupportedException {
-        Objects.requireNonNull(trabajo, "No puedo operar sobre un trabajo nulo.");
-        int index = listaTrabajos.indexOf(trabajo);
+    private Trabajo getTrabajoAbierto(Vehiculo vehiculo) throws OperationNotSupportedException {
+        Objects.requireNonNull(vehiculo, "No puedo operar sobre un vehiculo nulo.");
+        List<Trabajo> vehiculoTest = get(vehiculo);
+        int index = vehiculoTest.indexOf(Trabajo.get(vehiculo));
         if (index != -1)
-            return listaTrabajos.get(index);
-        else throw new OperationNotSupportedException("No existe ningún trabajo igual.");
+             return vehiculoTest.get(index);
+        else throw new OperationNotSupportedException("No existe ningún trabajo abierto para dicho vehículo.");
     }
 
     @Override
     public void anadirHoras(Trabajo trabajo, int horas) throws OperationNotSupportedException {
-        Objects.requireNonNull(trabajo, "No puedo operar sobre un trabajo nulo.");
-        getRevision(trabajo).anadirHoras(horas);
+        Objects.requireNonNull(trabajo, "No puedo añadir horas a un trabajo nulo.");
+        getTrabajoAbierto(trabajo.getVehiculo()).anadirHoras(horas);
     }
 
     @Override
     public void anadirPrecioMaterial(Trabajo trabajo, float precioMaterial) throws OperationNotSupportedException {
-        Objects.requireNonNull(trabajo, "No puedo operar sobre un trabajo nulo.");
-        trabajo.anadirPrecioMaterial(precioMaterial);
+        Objects.requireNonNull(trabajo, "No puedo añadir precio del material a un trabajo nulo.");
+        Mecanico mecanico = (Mecanico) trabajo;
+        mecanico.anadirPrecioMaterial(precioMaterial);
     }
 
     @Override
     public void cerrar(Trabajo trabajo, LocalDate fechaFin) throws OperationNotSupportedException {
-        Objects.requireNonNull(trabajo, "No puedo operar sobre un trabajo nulo.");
-        Objects.requireNonNull(fechaFin, "cerrar");
-        getRevision(trabajo).cerrar(fechaFin);
+        Objects.requireNonNull(trabajo, "No puedo cerrar un trabajo nulo.");
+        getTrabajoAbierto(trabajo.getVehiculo()).cerrar(fechaFin);
     }
 
     @Override
@@ -102,7 +103,7 @@ public class Trabajos implements ITrabajos {
         int index = listaTrabajos.indexOf(trabajo);
         if (index != -1)
             listaTrabajos.remove(trabajo);
-        else throw new OperationNotSupportedException("No existe ninguna trabajo igual.");
+        else throw new OperationNotSupportedException("No existe ningún trabajo igual.");
     }
 
 }
