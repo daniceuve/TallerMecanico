@@ -1,13 +1,15 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.negocio;
 
-public enum FabricaFuenteDatos {
-/*
-    MEMORIA{
-        public abstract IFuenteDatos crear() {
-            return new FuenteDatosMemoria;
-        }
-    }
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.FuenteDatosMemoria;
 
-    public abstract IFuenteDatos crear{};
-*/
+public enum FabricaFuenteDatos {
+
+    MEMORIA{
+        public IFuenteDatos crear() {
+            return new FuenteDatosMemoria();
+        }
+    };
+
+    public abstract IFuenteDatos crear();
+
 }
