@@ -3,7 +3,7 @@ package org.iesalandalus.programacion.tallermecanico.vista.eventos;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Opcion {
+public enum Evento {
 
     INSERTAR_CLIENTE(1, "Insertar cliente"),
     BUSCAR_CLIENTE(2, "Buscar cliente"),
@@ -27,14 +27,14 @@ public enum Opcion {
 
     private final int numeroOpcion;
     private final String mensaje;
-    private static final Map<Integer, Opcion> opciones = new HashMap<>();
+    private static final Map<Integer, Evento> opciones = new HashMap<>();
 
     static {
-        for (Opcion opcion : values())
+        for (Evento opcion : values())
             opciones.put(opcion.numeroOpcion, opcion);
     }
 
-    private Opcion(int numeroOpcion, String mensaje) {
+    private Evento(int numeroOpcion, String mensaje) {
         this.numeroOpcion = numeroOpcion;
         this.mensaje = mensaje;
     }
@@ -43,7 +43,7 @@ public enum Opcion {
         return opciones.containsKey(numeroOpcion);
     }
 
-    public static Opcion get(int numeroOpcion) {
+    public static Evento get(int numeroOpcion) {
         if (!esValida(numeroOpcion))
             throw new IllegalArgumentException("Opción no válida.");
         else return opciones.get(numeroOpcion);

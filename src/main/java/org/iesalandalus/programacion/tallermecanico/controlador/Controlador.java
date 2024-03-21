@@ -3,6 +3,7 @@ package org.iesalandalus.programacion.tallermecanico.controlador;
 import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
+import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Trabajo;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 
@@ -54,8 +55,8 @@ public class Controlador {
         return modelo.buscar(vehiculo);
     }
 
-    public Revision buscar(Revision revision) {
-        return modelo.buscar(revision);
+    public Trabajo buscar(Trabajo trabajo) {
+        return modelo.buscar(trabajo);
     }
 
     public boolean modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
@@ -94,15 +95,15 @@ public class Controlador {
         return modelo.getVehiculos();
     }
 
-    public List<Revision> getRevisiones() {
-        return modelo.getRevisiones();
+    public List<Trabajo> getTrabajos() {
+        return modelo.getTrabajos();
     }
 
-    public List<Revision> getRevisiones(Cliente cliente) {
-        return modelo.getRevisiones(cliente);
+    public List<Trabajo> getTrabajos(Cliente cliente) {
+        return modelo.getTrabajos(cliente);
     }
 
-    public List<Revision> getRevisiones(Vehiculo vehiculo) {
-        return modelo.getRevisiones(vehiculo);
+    public List<Trabajo> getTrabajos(Vehiculo vehiculo) {
+        return modelo.getTrabajos(vehiculo);
     }
 }

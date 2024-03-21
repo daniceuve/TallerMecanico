@@ -3,7 +3,7 @@ import org.iesalandalus.programacion.tallermecanico.controlador.Controlador;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.tallermecanico.vista.eventos.Opcion;
+import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.texto.Consola;
 
 import javax.naming.OperationNotSupportedException;
@@ -19,12 +19,12 @@ public class Vista {
     }
 
     public void comenzar() {
-        Opcion opcion;
+        Evento opcion;
         do {
             Consola.mostrarMenu();
             opcion = Consola.elegirOpcion();
             ejecutar(opcion);
-        } while (opcion != Opcion.SALIR);
+        } while (opcion != Evento.SALIR);
         controlador.terminar();
     }
 
@@ -32,7 +32,7 @@ public class Vista {
         System.out.println("Hasta luego.");
     }
 
-    private void ejecutar(Opcion opcion) {
+    private void ejecutar(Evento opcion) {
         try {
             switch (opcion) {
                 case INSERTAR_CLIENTE -> insertarCliente();
