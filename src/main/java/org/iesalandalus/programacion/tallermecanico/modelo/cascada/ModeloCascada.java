@@ -2,10 +2,7 @@ package org.iesalandalus.programacion.tallermecanico.modelo.cascada;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.FabricaFuenteDatos;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.*;
 
 import javax.naming.OperationNotSupportedException;
@@ -16,19 +13,20 @@ import java.util.Objects;
 
 public class ModeloCascada implements Modelo {
 
-    IClientes clientes;
-    IVehiculos vehiculos;
-    ITrabajos trabajos;
+    private IClientes clientes;
+    private IVehiculos vehiculos;
+    private ITrabajos trabajos;
 
     public ModeloCascada(FabricaFuenteDatos fabricaFuenteDatos) {
-        fabricaFuenteDatos.crear();
+        IFuenteDatos fuenteDatos = fabricaFuenteDatos.crear();
+        clientes = fuenteDatos.crearClientes();
+        vehiculos = fuenteDatos.crearVehiculos();
+        trabajos = fuenteDatos.crearTrabajos();
     }
 
     @Override
     public void comenzar() {
-        clientes = new Clientes();
-        vehiculos = new Vehiculos();
-        trabajos = new Trabajos();
+        System.out.println("Comenzado");
     }
 
     @Override
@@ -56,7 +54,7 @@ public class ModeloCascada implements Modelo {
 
     @Override
     public Cliente buscar(Cliente cliente) {
-        return clientes.buscar(cliente);
+        return new Cliente(clientes.buscar(cliente));
     }
 
     @Override
@@ -66,7 +64,12 @@ public class ModeloCascada implements Modelo {
 
     @Override
     public Trabajo buscar(Trabajo trabajo) {
-        return trabajos.buscar(trabajo);
+        trabajo = trabajos.buscar(trabajo);
+        if (trabajo instanceof Mecanico mecanico)
+            trabajo = new Mecanico(mecanico);
+        if (trabajo instanceof Revision revision)
+            trabajo = new Revision(revision);
+        return trabajo;
     }
 
     @Override
@@ -134,10 +137,10 @@ public class ModeloCascada implements Modelo {
     public List<Trabajo> getTrabajos() {
         List<Trabajo> listaTrabajos = new ArrayList<>();
         for (Trabajo recorrer : trabajos.get()) {
-            if (recorrer instanceof Mecanico)
-                listaTrabajos.add(new Mecanico((Mecanico) recorrer));
-            if (recorrer instanceof Revision)
-                listaTrabajos.add(new Revision((Revision) recorrer));
+            if (recorrer instanceof Mecanico mecanico)
+                listaTrabajos.add(new Mecanico(mecanico));
+            if (recorrer instanceof Revision revision)
+                listaTrabajos.add(new Revision(revision));
         }
         return listaTrabajos;
     }
@@ -146,10 +149,10 @@ public class ModeloCascada implements Modelo {
     public List<Trabajo> getTrabajos(Cliente cliente) {
         List<Trabajo> listaTrabajosCliente = new ArrayList<>();
         for (Trabajo recorrer : trabajos.get(cliente)) {
-            if (recorrer instanceof Mecanico)
-                listaTrabajosCliente.add(new Mecanico((Mecanico) recorrer));
-            if (recorrer instanceof Revision)
-                listaTrabajosCliente.add(new Revision((Revision) recorrer));
+            if (recorrer instanceof Mecanico mecanico)
+                listaTrabajosCliente.add(new Mecanico(mecanico));
+            if (recorrer instanceof Revision revision)
+                listaTrabajosCliente.add(new Revision(revision));
         }
         return listaTrabajosCliente;
     }
@@ -158,10 +161,10 @@ public class ModeloCascada implements Modelo {
     public List<Trabajo> getTrabajos(Vehiculo vehiculo) {
         List<Trabajo> listaTrabajosVehiculo = new ArrayList<>();
         for (Trabajo recorrer : trabajos.get(vehiculo)) {
-            if (recorrer instanceof Mecanico)
-                listaTrabajosVehiculo.add(new Mecanico((Mecanico) recorrer));
-            if (recorrer instanceof Revision)
-                listaTrabajosVehiculo.add(new Revision((Revision) recorrer));
+            if (recorrer instanceof Mecanico mecanico)
+                listaTrabajosVehiculo.add(new Mecanico(mecanico));
+            if (recorrer instanceof Revision revision)
+                listaTrabajosVehiculo.add(new Revision(revision));
         }
         return listaTrabajosVehiculo;
     }

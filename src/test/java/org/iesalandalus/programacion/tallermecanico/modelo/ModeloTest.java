@@ -37,11 +37,11 @@ class ModeloTest {
 
     private AutoCloseable procesadorAnotaciones;
     private MockedConstruction<Cliente> controladorCreacionMockCliente;
-    private MockedConstruction<IClientes> controladorCreacionMockClientes;
-    private MockedConstruction<IVehiculos> controladorCreacionMockVehiculos;
+    private MockedConstruction<Clientes> controladorCreacionMockClientes;
+    private MockedConstruction<Vehiculos> controladorCreacionMockVehiculos;
     private MockedConstruction<Revision> controladorCreacionMockRevision;
     private MockedConstruction<Mecanico> controladorCreacionMockMecanico;
-    private MockedConstruction<ITrabajos> controladorCreacionMockTrabajos;
+    private MockedConstruction<Trabajos> controladorCreacionMockTrabajos;
 
 
     @BeforeAll
@@ -67,11 +67,11 @@ class ModeloTest {
     @BeforeEach
     void init() {
         controladorCreacionMockCliente = mockConstruction(Cliente.class);
-        controladorCreacionMockClientes = mockConstruction(IClientes.class);
-        controladorCreacionMockVehiculos = mockConstruction(IVehiculos.class);
+        controladorCreacionMockClientes = mockConstruction(Clientes.class);
+        controladorCreacionMockVehiculos = mockConstruction(Vehiculos.class);
         controladorCreacionMockRevision = mockConstruction(Revision.class);
         controladorCreacionMockMecanico = mockConstruction(Mecanico.class);
-        controladorCreacionMockTrabajos = mockConstruction(ITrabajos.class);
+        controladorCreacionMockTrabajos = mockConstruction(Trabajos.class);
         procesadorAnotaciones = MockitoAnnotations.openMocks(this);
     }
 
