@@ -15,14 +15,15 @@ public enum Evento {
     BORRAR_VEHICULO(8, "Borrar vehículo"),
     LISTAR_VEHICULOS(9, "Listar vehículos"),
     INSERTAR_REVISION(10, "Insertar revisión"),
-    BUSCAR_REVISION(11, "Buscar revisión"),
-    BORRAR_REVISION(12, "Borrar revisión"),
-    LISTAR_REVISIONES(13, "Listar revisión"),
-    LISTAR_REVISIONES_CLIENTE(14, "Listar revisión de cliente"),
-    LISTAR_REVISION_VEHICULO(15, "Buscar revisión de vehículo"),
-    ANADIR_HORAS_REVISION(16, "Añadir horas de revisión"),
-    ANADIR_PRECIO_MATERIAL_REVISION(17, "Añadir precio material de revisión"),
-    CERRAR_REVISION(18, "Cerrar revisión"),
+    INSERTAR_MECANICO(11, "Insertar mecánico"),
+    BUSCAR_TRABAJO(12, "Buscar trabajo"),
+    BORRAR_TRABAJO(13, "Borrar trabajo"),
+    LISTAR_TRABAJOS(14, "Listar trabajos"),
+    LISTAR_TRABAJOS_CLIENTE(15, "Listar trabajos del cliente"),
+    LISTAR_TRABAJOS_VEHICULO(16, "Listar trabajos del vehiculo"),
+    ANADIR_HORAS_TRABAJO(17, "Añadir horas trabajo"),
+    ANADIR_PRECIO_MATERIAL_TRABAJO(18, "Añadir precio de material a un trabjo."),
+    CERRAR_TRABAJO(18, "Cerrar trabajo"),
     SALIR(19, "Salir");
 
     private final int numeroOpcion;
