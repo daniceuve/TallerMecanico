@@ -22,7 +22,7 @@ public enum Evento {
     LISTAR_TRABAJOS_CLIENTE(15, "Listar trabajos del cliente"),
     LISTAR_TRABAJOS_VEHICULO(16, "Listar trabajos del vehiculo"),
     ANADIR_HORAS_TRABAJO(17, "Añadir horas trabajo"),
-    ANADIR_PRECIO_MATERIAL_TRABAJO(18, "Añadir precio de material a un trabjo."),
+    ANADIR_PRECIO_MATERIAL_TRABAJO(18, "Añadir precio de material a un trabajo."),
     CERRAR_TRABAJO(18, "Cerrar trabajo"),
     SALIR(19, "Salir");
 
