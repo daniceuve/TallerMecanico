@@ -23,8 +23,8 @@ public enum Evento {
     LISTAR_TRABAJOS_VEHICULO(16, "Listar trabajos del vehiculo"),
     ANADIR_HORAS_TRABAJO(17, "Añadir horas trabajo"),
     ANADIR_PRECIO_MATERIAL_TRABAJO(18, "Añadir precio de material a un trabajo."),
-    CERRAR_TRABAJO(18, "Cerrar trabajo"),
-    SALIR(19, "Salir");
+    CERRAR_TRABAJO(19, "Cerrar trabajo"),
+    SALIR(20, "Salir");
 
     private final int numeroOpcion;
     private final String mensaje;
@@ -44,6 +44,10 @@ public enum Evento {
         return opciones.containsKey(numeroOpcion);
     }
 
+    public int getCodigo() {
+        return numeroOpcion;
+    }
+
     public static Evento get(int numeroOpcion) {
         if (!esValida(numeroOpcion))
             throw new IllegalArgumentException("Opción no válida.");
@@ -52,6 +56,6 @@ public enum Evento {
 
     @Override
     public String toString() {
-        return String.format("%s - %s", this.numeroOpcion, this.mensaje);
+        return mensaje;
     }
 }

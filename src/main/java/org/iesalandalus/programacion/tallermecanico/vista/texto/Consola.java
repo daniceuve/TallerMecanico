@@ -24,7 +24,7 @@ public class Consola {
     static void mostrarMenu() {
         mostrarCabecera("Taller mecánico");
         for (Evento opcion : Evento.values())
-            System.out.println(opcion);
+            System.out.printf("%d.- %s%n", opcion.getCodigo(), opcion);
     }
 
     static Evento elegirOpcion() {
