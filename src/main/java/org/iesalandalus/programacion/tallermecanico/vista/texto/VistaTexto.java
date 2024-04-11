@@ -5,6 +5,7 @@ import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.GestorEventos;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 public class VistaTexto implements Vista {
@@ -135,6 +136,7 @@ public class VistaTexto implements Vista {
     @Override
     public void mostrarClientes(List<Cliente> clientes) {
         if (!clientes.isEmpty()) {
+            clientes.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
             for (Cliente cliente : clientes)
                 System.out.println(cliente);
         } else
@@ -144,6 +146,7 @@ public class VistaTexto implements Vista {
     @Override
     public void mostrarVehiculos(List<Vehiculo> vehiculos) {
         if (!vehiculos.isEmpty()) {
+            vehiculos.sort(Comparator.comparing(Vehiculo::marca).thenComparing(Vehiculo::modelo).thenComparing(Vehiculo::matricula));
             for (Vehiculo vehiculo : vehiculos)
                 System.out.println(vehiculo);
         } else
@@ -153,6 +156,7 @@ public class VistaTexto implements Vista {
     @Override
     public void mostrarTrabajos(List<Trabajo> trabajos) {
         if (!trabajos.isEmpty()) {
+
             for (Trabajo trabajo : trabajos)
                 System.out.println(trabajo);
         } else
