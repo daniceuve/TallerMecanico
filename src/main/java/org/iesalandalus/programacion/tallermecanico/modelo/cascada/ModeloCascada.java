@@ -3,7 +3,6 @@ package org.iesalandalus.programacion.tallermecanico.modelo.cascada;
 import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.*;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.*;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;

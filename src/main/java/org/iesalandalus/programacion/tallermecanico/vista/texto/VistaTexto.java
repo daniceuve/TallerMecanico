@@ -155,8 +155,11 @@ public class VistaTexto implements Vista {
 
     @Override
     public void mostrarTrabajos(List<Trabajo> trabajos) {
-        if (!trabajos.isEmpty()) {
 
+        //Comparator<Cliente> comparador = Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni);
+
+        if (!trabajos.isEmpty()) {
+            //trabajos.sort(Comparator.comparing(Trabajo::getFechaInicio).thenComparing(Trabajo::getCliente:comparador));
             for (Trabajo trabajo : trabajos)
                 System.out.println(trabajo);
         } else
