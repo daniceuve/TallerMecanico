@@ -7,6 +7,7 @@ import org.iesalandalus.programacion.tallermecanico.vista.eventos.GestorEventos;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class VistaTexto implements Vista {
 
@@ -110,6 +111,11 @@ public class VistaTexto implements Vista {
     }
 
     @Override
+    public LocalDate leerMes() {
+        return Consola.leerFecha("Introduce la fecha a mostrar las estadísticas.");
+    }
+
+    @Override
     public void notificarResultado(Evento evento, String texto, boolean exito) {
         Consola.mostrarCabecera(evento.name());
         if (exito)
@@ -159,7 +165,7 @@ public class VistaTexto implements Vista {
         //Comparator<Cliente> comparador = Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni);
 
         if (!trabajos.isEmpty()) {
-            //trabajos.sort(Comparator.comparing(Trabajo::getFechaInicio).thenComparing(Trabajo::getCliente:comparador));
+            trabajos.sort(Comparator.comparing(Trabajo::getFechaInicio).thenComparing());
             for (Trabajo trabajo : trabajos)
                 System.out.println(trabajo);
         } else
@@ -183,4 +189,13 @@ public class VistaTexto implements Vista {
         } else
             System.out.println("No hay trabajos que mostrar para dicho vehículo.");
     }
+
+    @Override
+    public void mostrarEstadisticasMensuales(Map<TipoTrabajo, Integer> estadisticas) {
+        if (!estadisticas.isEmpty()) {
+            System.out.println(estadisticas);
+        } else
+            System.out.println("No hay estadísticas para mostrar.");
+    }
+
 }
